@@ -16,15 +16,7 @@ public class DemoApplication {
 	@RequestMapping("/")
 	@ResponseBody
 	String home() {
-		String serverTime = getServerTime();
-		return serverTime;
-	}
-
-	private String getServerTime(){
-		Date dateToBeFormatted = new Date();
-		SimpleDateFormat datePattern = new SimpleDateFormat("HH:mm a");
-		String currentServerTime = datePattern.format(dateToBeFormatted);
-		return "The current time on the server is " + currentServerTime;
+	    return "Hello World";
 	}
 
 	public static void main(String[] args) {
