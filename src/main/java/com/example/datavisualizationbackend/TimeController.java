@@ -9,7 +9,7 @@ import java.util.Date;
 @RestController
 public class TimeController {
 
-    @RequestMapping("/time")
+    @RequestMapping("/")
     public String getServerTime(){
         Date dateToBeFormatted = new Date();
         SimpleDateFormat datePattern = new SimpleDateFormat("HH:mm a");
