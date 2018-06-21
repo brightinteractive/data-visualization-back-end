@@ -17,5 +17,4 @@ public class TimeController {
         return "{\"time\":\"" + currentServerTime + "\"}";
     }
 
-
 }
