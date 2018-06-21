@@ -14,7 +14,7 @@ public class TimeController {
         Date dateToBeFormatted = new Date();
         SimpleDateFormat datePattern = new SimpleDateFormat("HH:mm a");
         String currentServerTime = datePattern.format(dateToBeFormatted);
-        return "{\"serverTime\":" + currentServerTime + "}";
+        return "{\"time\":" + currentServerTime + "}";
     }
 
 
