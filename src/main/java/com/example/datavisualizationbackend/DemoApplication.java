@@ -2,12 +2,7 @@ package com.example.datavisualizationbackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.*;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 
 @Controller
 @SpringBootApplication
