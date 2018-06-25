@@ -1,7 +1,8 @@
-package com.example.datavisualizationbackend;
+package com.example.datavisualizationbackend.controllers;
 
-import org.springframework.http.MediaType;
+import com.example.datavisualizationbackend.models.Time;
 import org.springframework.web.bind.annotation.*;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ import java.util.Date;
 public class TimeController {
 
     @GetMapping
-    public Time getServerTime(){
+    public Time getServerTime() {
         Date dateToBeFormatted = new Date();
         SimpleDateFormat datePattern = new SimpleDateFormat("HH:mm a");
         Time serverTime = new Time(datePattern.format(dateToBeFormatted));

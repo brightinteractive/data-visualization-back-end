@@ -1,13 +1,13 @@
-package com.example.datavisualizationbackend;
+package com.example.datavisualizationbackend.models;
 
 public class Time {
     private String time;
 
-    public Time(String time){
+    public Time(String time) {
         this.time = time;
     }
 
-    public String getTime(){
+    public String getTime() {
         return this.time;
     }
 }
