@@ -1,5 +1,6 @@
 package com.example.datavisualizationbackend;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;

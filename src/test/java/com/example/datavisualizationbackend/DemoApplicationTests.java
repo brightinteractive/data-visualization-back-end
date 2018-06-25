@@ -1,9 +1,11 @@
 package com.example.datavisualizationbackend;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -30,7 +32,8 @@ public class DemoApplicationTests {
 
 	@Test
 	public void testTimeController() throws Exception{
-		mockMvc.perform(get("/"))
+		mockMvc.perform(get("/")
+				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
 }
