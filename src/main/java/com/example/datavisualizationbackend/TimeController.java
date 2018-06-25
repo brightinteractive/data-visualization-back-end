@@ -1,19 +1,15 @@
 package com.example.datavisualizationbackend;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/")
 public class TimeController {
 
-    @RequestMapping(value = "/", method=RequestMethod.GET)
+    @GetMapping
     public Time getServerTime(){
         Date dateToBeFormatted = new Date();
         SimpleDateFormat datePattern = new SimpleDateFormat("HH:mm a");
