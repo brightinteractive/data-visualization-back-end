@@ -14,18 +14,18 @@ import org.springframework.amqp.core.Queue;
 @RequestMapping("/upload-event")
 public class UploadEventController {
 
-    @Autowired private RabbitTemplate amqpTemplate;
-    @Autowired private Queue rabbitQueue;
+    @Autowired
+    private RabbitTemplate amqpTemplate;
+    @Autowired
+    private Queue rabbitQueue;
 
     @GetMapping
-    public String testProduce(){
-
+    public String testProduce() {
         ApplicationContext context = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
-        String test = "HELLO RABBITMQ";
+        String test = "Upload";
         AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
         amqpTemplate.convertAndSend(test);
-        System.out.println("Sent to RabbitMQ: " + test);
-        return "Works";
+        return "Event Uploaded";
     }
 
 
