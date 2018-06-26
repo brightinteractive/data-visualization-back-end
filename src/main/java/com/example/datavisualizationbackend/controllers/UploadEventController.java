@@ -22,7 +22,7 @@ public class UploadEventController {
     @GetMapping
     public String testProduce(){
         String test = "HELLO RABBITMQ";
-//        messageProducer.sendMessage(test);
+        messageProducer.sendMessage(test);
         return "Works";
     }
 
