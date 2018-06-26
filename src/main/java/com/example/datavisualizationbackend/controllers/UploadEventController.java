@@ -9,6 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.web.bind.annotation.*;
 import org.springframework.amqp.core.Queue;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/upload-event")
 public class UploadEventController {
