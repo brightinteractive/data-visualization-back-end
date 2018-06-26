@@ -1,7 +1,6 @@
 package com.example.datavisualizationbackend.controllers;
 
 import com.example.datavisualizationbackend.conifg.RabbitMQConfig;
-import com.example.datavisualizationbackend.producer.MessageProducer;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
