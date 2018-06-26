@@ -13,19 +13,8 @@ import org.springframework.amqp.core.Queue;
 @RequestMapping("/upload-event")
 public class UploadEventController {
 
-//    @Autowired
-//    private MessageProducer messageProducer;
-
     @Autowired private RabbitTemplate amqpTemplate;
     @Autowired private Queue rabbitQueue;
-
-//
-//    @PostMapping
-//    public String produce(@RequestBody String message) {
-//        System.out.println("Message Received: " + message);
-//        messageProducer.sendMessage(message);
-//        return "Message Sent to rabbitMQ and message=" + message;
-//    }
 
     @GetMapping
     public String testProduce(){
@@ -34,8 +23,6 @@ public class UploadEventController {
         String test = "HELLO RABBITMQ";
         AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
         amqpTemplate.convertAndSend(test);
-//        messageProducer.sendMessage(test);
-
         System.out.println("Sent to RabbitMQ: " + test);
         return "Works";
     }

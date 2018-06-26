@@ -1,8 +1,5 @@
 package com.example.datavisualizationbackend.conifg;
 
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.amqp.core.Queue;
@@ -23,7 +20,7 @@ import static java.lang.System.getenv;
 @Configuration
 public class RabbitMQConfig {
 
-    protected final String helloWorldQueueName = "hello.world.queue";
+    protected final String uploadEventQueueName = "upload.event.queue";
 
     @Bean
     public ConnectionFactory connectionFactory() {
@@ -52,14 +49,14 @@ public class RabbitMQConfig {
     @Bean
     public RabbitTemplate rabbitTemplate() {
         RabbitTemplate template = new RabbitTemplate(connectionFactory());
-        template.setRoutingKey(this.helloWorldQueueName);
-        template.setQueue(this.helloWorldQueueName);
+        template.setRoutingKey(this.uploadEventQueueName);
+        template.setQueue(this.uploadEventQueueName);
         return template;
     }
 
     @Bean
     public Queue queue() {
-        return new Queue(this.helloWorldQueueName);
+        return new Queue(this.uploadEventQueueName);
     }
 
     private static String getEnvOrThrow(String name) {
@@ -69,22 +66,5 @@ public class RabbitMQConfig {
         }
         return env;
     }
-
-//    public static final String ROUTING_KEY = "my.queue.key";
-//
-//    @Bean
-//    Queue queue() {
-//        return new Queue(ROUTING_KEY, true);
-//    }
-//
-//    @Bean
-//    TopicExchange exchange() {
-//        return new TopicExchange("my_queue_exchange");
-//    }
-//
-//    @Bean
-//    Binding binding(Queue queue, TopicExchange exchange) {
-//        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
-//    }
 
 }
