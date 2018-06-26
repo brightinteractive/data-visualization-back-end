@@ -19,5 +19,12 @@ public class UploadEventController {
         return "Message Sent to rabbitMQ and message=" + message;
     }
 
+    @GetMapping
+    public String testProduce(){
+        String test = "HELLO RABBITMQ";
+        messageProducer.sendMessage(test);
+        return "Works";
+    }
+
 
 }
