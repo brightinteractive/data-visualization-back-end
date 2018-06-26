@@ -13,11 +13,10 @@ public class UploadEventController {
 
 
     @PostMapping
-    public String produce(@RequestBody Object message) {
+    public String produce(@RequestBody String message) {
         System.out.println("Message Received: " + message);
-        return "Message Recieved!";
-//        messageProducer.sendMessage(message);
-//        return "Message Sent to rabbitMQ and message=" + message;
+        messageProducer.sendMessage(message);
+        return "Message Sent to rabbitMQ and message=" + message;
     }
 
 
