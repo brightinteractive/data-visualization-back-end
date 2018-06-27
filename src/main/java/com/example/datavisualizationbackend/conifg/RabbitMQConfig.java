@@ -22,12 +22,12 @@ public class RabbitMQConfig {
 
     protected final String uploadEventQueueName = "upload.event.queue";
 
-    @Value("${cloudampq.url}")
-    private String cloudAmpqUrl;
+    @Value("${cloudamqp.url}")
+    private String cloudAmqpUrl;
 
     @Bean
     public ConnectionFactory connectionFactory() throws URISyntaxException {
-        return new CachingConnectionFactory(new URI(cloudAmpqUrl));
+        return new CachingConnectionFactory(new URI(cloudAmqpUrl));
     }
 
     @Bean
