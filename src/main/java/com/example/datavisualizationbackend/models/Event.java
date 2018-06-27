@@ -7,7 +7,7 @@ public class Event {
     private int assetId;
     private String assetTitle;
 
-    public Event( String userId, String userName, String group, int assetId, String assetTitle) {
+    public Event(String userId, String userName, String group, int assetId, String assetTitle) {
         this.userId = userId;
         this.userName = userName;
         this.group = group;

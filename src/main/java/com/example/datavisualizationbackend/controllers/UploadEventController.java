@@ -20,25 +20,14 @@ public class UploadEventController {
     @Autowired
     private Queue rabbitQueue;
 
-//    @GetMapping
-//    public String testProduce() {
-//        ApplicationContext context = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
-//        String test = "Upload";
-//        AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
-//        amqpTemplate.convertAndSend(test);
-//        return "Event Uploaded";
-//    }
-
     @PostMapping
-    public Event uploadEvent(@RequestBody Event event){
+    public Event uploadEvent(@RequestBody Event event) {
         ApplicationContext context = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
         AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
-        String test = "Upload";
         amqpTemplate.convertAndSend(event);
         System.out.println(event);
         return event;
     }
-
 
 
 }
