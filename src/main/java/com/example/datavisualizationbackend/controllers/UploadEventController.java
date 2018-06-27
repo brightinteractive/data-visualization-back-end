@@ -31,9 +31,10 @@ public class UploadEventController {
 
     @PostMapping
     public Event uploadEvent(@RequestBody Event event){
-//        ApplicationContext context = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
-//        AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
-//        amqpTemplate.convertAndSend(event);
+        ApplicationContext context = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
+        AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
+        String test = "Upload";
+        amqpTemplate.convertAndSend(test);
         System.out.println(event);
         return event;
     }
