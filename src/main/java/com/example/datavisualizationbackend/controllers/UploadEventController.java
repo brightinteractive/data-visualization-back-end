@@ -34,7 +34,7 @@ public class UploadEventController {
         ApplicationContext context = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
         AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
         String test = "Upload";
-        amqpTemplate.convertAndSend(test);
+        amqpTemplate.convertAndSend(event);
         System.out.println(event);
         return event;
     }

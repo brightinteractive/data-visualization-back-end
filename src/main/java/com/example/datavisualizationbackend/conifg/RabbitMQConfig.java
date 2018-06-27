@@ -1,6 +1,7 @@
 package com.example.datavisualizationbackend.conifg;
 
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
@@ -49,6 +50,7 @@ public class RabbitMQConfig {
     @Bean
     public RabbitTemplate rabbitTemplate() {
         RabbitTemplate template = new RabbitTemplate(connectionFactory());
+        template.setMessageConverter(new Jackson2JsonMessageConverter());
         template.setRoutingKey(this.uploadEventQueueName);
         template.setQueue(this.uploadEventQueueName);
         return template;
