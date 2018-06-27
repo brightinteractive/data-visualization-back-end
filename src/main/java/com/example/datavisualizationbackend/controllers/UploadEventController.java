@@ -15,11 +15,6 @@ import org.springframework.amqp.core.Queue;
 @RequestMapping("/upload-event")
 public class UploadEventController {
 
-    @Autowired
-    private RabbitTemplate amqpTemplate;
-    @Autowired
-    private Queue rabbitQueue;
-
     @PostMapping
     public Event uploadEvent(@RequestBody Event event) {
         ApplicationContext context = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
