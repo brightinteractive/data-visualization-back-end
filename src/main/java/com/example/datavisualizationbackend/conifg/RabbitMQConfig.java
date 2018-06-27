@@ -1,16 +1,15 @@
 package com.example.datavisualizationbackend.conifg;
 
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.amqp.core.Queue;
-import org.springframework.context.annotation.Bean;
-
-
 import org.springframework.amqp.core.AmqpAdmin;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,32 +22,21 @@ public class RabbitMQConfig {
 
     protected final String uploadEventQueueName = "upload.event.queue";
 
+    @Value("${cloudampq.url}")
+    private String cloudAmpqUrl;
+
     @Bean
-    public ConnectionFactory connectionFactory() {
-        final URI ampqUrl;
-        try {
-            ampqUrl = new URI(getEnvOrThrow("CLOUDAMQP_URL"));
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-
-        final CachingConnectionFactory factory = new CachingConnectionFactory();
-        factory.setUsername(ampqUrl.getUserInfo().split(":")[0]);
-        factory.setPassword(ampqUrl.getUserInfo().split(":")[1]);
-        factory.setHost(ampqUrl.getHost());
-        factory.setPort(ampqUrl.getPort());
-        factory.setVirtualHost(ampqUrl.getPath().substring(1));
-
-        return factory;
+    public ConnectionFactory connectionFactory() throws URISyntaxException {
+        return new CachingConnectionFactory(new URI(cloudAmpqUrl));
     }
 
     @Bean
-    public AmqpAdmin amqpAdmin() {
+    public AmqpAdmin amqpAdmin() throws URISyntaxException {
         return new RabbitAdmin(connectionFactory());
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate() {
+    public RabbitTemplate rabbitTemplate() throws URISyntaxException {
         RabbitTemplate template = new RabbitTemplate(connectionFactory());
         template.setMessageConverter(new Jackson2JsonMessageConverter());
         template.setRoutingKey(this.uploadEventQueueName);
