@@ -1,6 +1,7 @@
 package com.example.datavisualizationbackend.controllers;
 
-import com.example.datavisualizationbackend.conifg.RabbitMQConfig;
+//import com.example.datavisualizationbackend.conifg.RabbitMQConfig;
+import com.example.datavisualizationbackend.models.Event;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +15,26 @@ import org.springframework.amqp.core.Queue;
 @RequestMapping("/upload-event")
 public class UploadEventController {
 
-    @Autowired
-    private RabbitTemplate amqpTemplate;
-    @Autowired
-    private Queue rabbitQueue;
+//    @Autowired
+//    private RabbitTemplate amqpTemplate;
+//    @Autowired
+//    private Queue rabbitQueue;
 
     @GetMapping
     public String testProduce() {
-        ApplicationContext context = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
+//        ApplicationContext context = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
         String test = "Upload";
-        AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
-        amqpTemplate.convertAndSend(test);
+//        AmqpTemplate amqpTemplate = context.getBean(AmqpTemplate.class);
+//        amqpTemplate.convertAndSend(test);
         return "Event Uploaded";
     }
+
+    @PostMapping//(consumes="application/json", produces="application-json")
+    public Event uploadEvent(@RequestBody Event event){
+        System.out.println(event);
+        return event;
+    }
+
 
 
 }
