@@ -1,18 +1,24 @@
 package com.example.datavisualizationbackend.models;
 
+import java.util.Date;
+
 public class Event {
+    private String eventType;
     private String userId;
     private String userName;
     private String group;
     private int assetId;
     private String assetTitle;
+    private Date date;
 
-    public Event(String userId, String userName, String group, int assetId, String assetTitle) {
+    public Event(String eventType, String userId, String userName, String group, int assetId, String assetTitle, Date date) {
+        this.eventType = eventType;
         this.userId = userId;
         this.userName = userName;
         this.group = group;
         this.assetId = assetId;
         this.assetTitle = assetTitle;
+        this.date = date;
     }
 
     public int getAssetId() {
@@ -34,4 +40,10 @@ public class Event {
     public String getUserName() {
         return userName;
     }
+
+    public String getEventType() { return eventType; }
+
+    public Date getDate() { return date; }
+
+
 }
