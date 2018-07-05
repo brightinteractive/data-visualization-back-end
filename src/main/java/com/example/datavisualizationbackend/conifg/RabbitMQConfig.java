@@ -22,7 +22,7 @@ public class RabbitMQConfig {
 
     protected final String uploadEventQueueName = "upload.event.queue";
 
-    @Value("${cloudamqp.url}")
+    @Value("amqp://virijqsl:Q4naR8xj2Uy3ybk0kCfYFP3Y0sXBKESk@wolverine.rmq.cloudamqp.com/virijqsl")
     private String cloudAmqpUrl;
 
     @Bean
