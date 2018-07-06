@@ -1,6 +1,6 @@
 package com.example.datavisualizationbackend;
 
-import com.example.datavisualizationbackend.controllers.TimeController;
+import com.example.datavisualizationbackend.controllers.UploadEventController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,21 +17,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ApplicationTests {
 
-	//Test all servlet related calls. Can test endpoints by calling them directly using MockMvc.
-	private MockMvc mockMvc;
+    //Test all servlet related calls. Can test endpoints by calling them directly using MockMvc.
+    private MockMvc mockMvc;
 
-	@InjectMocks
-	private TimeController timeController;
+    @InjectMocks
+    private UploadEventController uploadEventController;
 
-	@Before
-	public void setUp() throws Exception{
-		mockMvc = MockMvcBuilders.standaloneSetup(timeController).build();
-	}
+    @Before
+    public void setUp() throws Exception {
+        mockMvc = MockMvcBuilders.standaloneSetup(uploadEventController).build();
+    }
 
-	@Test
-	public void testTimeController() throws Exception{
-		mockMvc.perform(get("/")
-				.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk());
-	}
+    @Test
+    public void testUploadEventController() throws Exception {
+        mockMvc.perform(get("/")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }

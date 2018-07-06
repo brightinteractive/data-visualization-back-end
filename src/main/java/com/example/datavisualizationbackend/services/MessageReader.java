@@ -10,8 +10,6 @@ import org.springframework.amqp.core.MessageListener;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.amqp.support.converter.SimpleMessageConverter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.util.ErrorHandler;
@@ -21,17 +19,22 @@ import java.util.Date;
 
 public class MessageReader {
 
-    static public void ReadMessages(){
-
+    static public void ReadMessages() {
+        System.out.println("READING MESSAGES");
         final ApplicationContext rabbitConfig = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
         final ConnectionFactory rabbitConnectionFactory = rabbitConfig.getBean(ConnectionFactory.class);
         final Queue rabbitQueue = rabbitConfig.getBean(Queue.class);
-        final MessageConverter messageConverter = new SimpleMessageConverter();
-
         final SimpleMessageListenerContainer listenerContainer = new SimpleMessageListenerContainer();
+
         listenerContainer.setConnectionFactory(rabbitConnectionFactory);
         listenerContainer.setQueueNames(rabbitQueue.getName());
+        setMessageListener(listenerContainer);
+        SetErrorHandler(listenerContainer);
+        addShutDownHook(listenerContainer);
+        listenerContainer.start();
+    }
 
+    private static void setMessageListener(SimpleMessageListenerContainer listenerContainer) {
         listenerContainer.setMessageListener(new MessageListener() {
             @Override
             public void onMessage(Message message) {
@@ -39,23 +42,26 @@ public class MessageReader {
                 Gson gson = new GsonBuilder().create();
                 EventHack event = gson.fromJson(new String(body), EventHack.class);
                 Event eventOut = new Event(event.getEventType(), event.getUserId(), event.getUserName(), event.getGroup(), event.getAssetId(), event.getAssetTitle(), new Date(event.getDate()));
-                //SEND TO DATABASE
+                System.out.println(eventOut);
             }
         });
+    }
 
-        listenerContainer.setErrorHandler(new ErrorHandler() {
-            public void handleError(Throwable t) {
-                t.printStackTrace();
-            }
-        });
-
+    private static void addShutDownHook(SimpleMessageListenerContainer listenerContainer) {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
                 listenerContainer.shutdown();
             }
         });
-        listenerContainer.start();
+    }
+
+    private static void SetErrorHandler(SimpleMessageListenerContainer listenerContainer) {
+        listenerContainer.setErrorHandler(new ErrorHandler() {
+            public void handleError(Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 }
 

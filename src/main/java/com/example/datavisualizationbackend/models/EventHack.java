@@ -1,7 +1,5 @@
 package com.example.datavisualizationbackend.models;
 
-import java.io.Serializable;
-
 public class EventHack {
     private String eventType;
     private String userId;
@@ -21,16 +19,8 @@ public class EventHack {
         this.date = date;
     }
 
-    public int getAssetId() {
-        return assetId;
-    }
-
-    public String getAssetTitle() {
-        return assetTitle;
-    }
-
-    public String getGroup() {
-        return group;
+    public String getEventType() {
+        return eventType;
     }
 
     public String getUserId() {
@@ -41,8 +31,34 @@ public class EventHack {
         return userName;
     }
 
-    public String getEventType() { return eventType; }
+    public String getGroup() {
+        return group;
+    }
 
-    public long getDate() { return date; }
+    public int getAssetId() {
+        return assetId;
+    }
+
+    public String getAssetTitle() {
+        return assetTitle;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    @Override
+    public String toString() {
+        return "EventHack{" +
+                "eventType='" + eventType + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", group='" + group + '\'' +
+                ", assetId=" + assetId +
+                ", assetTitle='" + assetTitle + '\'' +
+                ", date=" + date +
+                '}';
+    }
+
 
 }

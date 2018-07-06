@@ -22,6 +22,19 @@ public class Event {
         this.date = date;
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventType='" + eventType + '\'' +
+                ", userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", group='" + group + '\'' +
+                ", assetId=" + assetId +
+                ", assetTitle='" + assetTitle + '\'' +
+                ", date=" + date +
+                '}';
+    }
+
     public int getAssetId() {
         return assetId;
     }
@@ -42,8 +55,12 @@ public class Event {
         return userName;
     }
 
-    public String getEventType() { return eventType; }
+    public String getEventType() {
+        return eventType;
+    }
 
-    public Date getDate() { return date; }
+    public Date getDate() {
+        return date;
+    }
 
 }
