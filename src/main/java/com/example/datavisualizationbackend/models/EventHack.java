@@ -1,18 +1,17 @@
 package com.example.datavisualizationbackend.models;
 
 import java.io.Serializable;
-import java.util.Date;
 
-public class Event {
+public class EventHack {
     private String eventType;
     private String userId;
     private String userName;
     private String group;
     private int assetId;
     private String assetTitle;
-    private Date date;
+    private long date;
 
-    public Event(String eventType, String userId, String userName, String group, int assetId, String assetTitle, Date date) {
+    public EventHack(String eventType, String userId, String userName, String group, int assetId, String assetTitle, long date) {
         this.eventType = eventType;
         this.userId = userId;
         this.userName = userName;
@@ -44,6 +43,6 @@ public class Event {
 
     public String getEventType() { return eventType; }
 
-    public Date getDate() { return date; }
+    public long getDate() { return date; }
 
 }

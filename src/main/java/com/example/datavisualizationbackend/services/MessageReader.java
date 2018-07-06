@@ -2,21 +2,26 @@ package com.example.datavisualizationbackend.services;
 
 import com.example.datavisualizationbackend.conifg.RabbitMQConfig;
 import com.example.datavisualizationbackend.models.Event;
+import com.example.datavisualizationbackend.models.EventHack;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.amqp.support.converter.SimpleMessageConverter;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.util.ErrorHandler;
 
+import java.util.Date;
+
+
 public class MessageReader {
 
-    public void ReadMessages(){
+    static public void ReadMessages(){
 
         final ApplicationContext rabbitConfig = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
         final ConnectionFactory rabbitConnectionFactory = rabbitConfig.getBean(ConnectionFactory.class);
@@ -30,10 +35,11 @@ public class MessageReader {
         listenerContainer.setMessageListener(new MessageListener() {
             @Override
             public void onMessage(Message message) {
-                System.out.println(message);
-                final Event event = (Event)messageConverter.fromMessage(message);
-
-                System.out.println("Recieved from RabbitMQ: " +  event);
+                byte[] body = message.getBody();
+                Gson gson = new GsonBuilder().create();
+                EventHack event = gson.fromJson(new String(body), EventHack.class);
+                Event eventOut = new Event(event.getEventType(), event.getUserId(), event.getUserName(), event.getGroup(), event.getAssetId(), event.getAssetTitle(), new Date(event.getDate()));
+                //SEND TO DATABASE
             }
         });
 
@@ -43,18 +49,16 @@ public class MessageReader {
             }
         });
 
-        // register a shutdown hook with the JVM
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                System.out.println("Shutting down BigOperationWorker");
                 listenerContainer.shutdown();
             }
         });
-
-        // start up the listener. this will block until JVM is killed.
         listenerContainer.start();
-        System.out.println("BigOperationWorker started");
-
     }
 }
+
+
+
+

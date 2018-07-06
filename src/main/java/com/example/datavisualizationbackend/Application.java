@@ -1,6 +1,7 @@
 package com.example.datavisualizationbackend;
 
 import com.example.datavisualizationbackend.services.MessageReader;
+import org.springframework.amqp.core.Message;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,8 +12,8 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        MessageReader messageReader = new MessageReader();
-        messageReader.ReadMessages();
+//        MessageReader messageReader = new MessageReader();
+        MessageReader.ReadMessages();
     }
 
 }
