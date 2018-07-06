@@ -18,7 +18,7 @@ import static java.lang.System.getenv;
 
 
 @Configuration
-public class RabbitMQConfig {
+public class RabbitMQConfiguration {
 
     protected final String uploadEventQueueName = "upload.event.queue";
 

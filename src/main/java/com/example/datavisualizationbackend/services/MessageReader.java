@@ -1,6 +1,6 @@
 package com.example.datavisualizationbackend.services;
 
-import com.example.datavisualizationbackend.conifg.RabbitMQConfig;
+import com.example.datavisualizationbackend.conifg.RabbitMQConfiguration;
 import com.example.datavisualizationbackend.models.Event;
 import com.example.datavisualizationbackend.models.EventHack;
 import com.google.gson.Gson;
@@ -21,7 +21,7 @@ public class MessageReader {
 
     static public void ReadMessages() {
         System.out.println("READING MESSAGES");
-        final ApplicationContext rabbitConfig = new AnnotationConfigApplicationContext(RabbitMQConfig.class);
+        final ApplicationContext rabbitConfig = new AnnotationConfigApplicationContext(RabbitMQConfiguration.class);
         final ConnectionFactory rabbitConnectionFactory = rabbitConfig.getBean(ConnectionFactory.class);
         final Queue rabbitQueue = rabbitConfig.getBean(Queue.class);
         final SimpleMessageListenerContainer listenerContainer = new SimpleMessageListenerContainer();
@@ -42,7 +42,6 @@ public class MessageReader {
                 Gson gson = new GsonBuilder().create();
                 EventHack event = gson.fromJson(new String(body), EventHack.class);
                 Event eventOut = new Event(event.getEventType(), event.getUserId(), event.getUserName(), event.getGroup(), event.getAssetId(), event.getAssetTitle(), new Date(event.getDate()));
-                System.out.println(eventOut);
             }
         });
     }
