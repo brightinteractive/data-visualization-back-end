@@ -1,7 +1,6 @@
 package com.example.datavisualizationbackend.simulator.services;
 
-import com.example.datavisualizationbackend.shared.models.Event;
-import com.example.datavisualizationbackend.simulator.controllers.UploadEventController;
+import com.example.datavisualizationbackend.simulator.models.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

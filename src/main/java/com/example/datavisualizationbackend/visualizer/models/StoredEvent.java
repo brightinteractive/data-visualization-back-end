@@ -1,4 +1,4 @@
-package com.example.datavisualizationbackend.shared.models;
+package com.example.datavisualizationbackend.visualizer.models;
 
 import org.springframework.data.annotation.Id;
 

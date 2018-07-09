@@ -1,4 +1,4 @@
-package com.example.datavisualizationbackend.shared.conifg;
+package com.example.datavisualizationbackend.shared.config;
 
 import com.example.datavisualizationbackend.visualizer.services.MessageReceiver;
 import org.springframework.amqp.core.AmqpAdmin;
