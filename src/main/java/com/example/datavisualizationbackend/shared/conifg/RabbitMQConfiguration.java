@@ -1,4 +1,4 @@
-package com.example.datavisualizationbackend.conifg;
+package com.example.datavisualizationbackend.shared.conifg;
 
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;

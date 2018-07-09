@@ -1,4 +1,4 @@
-package com.example.datavisualizationbackend.models;
+package com.example.datavisualizationbackend.shared.models;
 
 public class EventHack {
     private String eventType;

@@ -1,10 +1,13 @@
-package com.example.datavisualizationbackend.services;
+package com.example.datavisualizationbackend.visualizer.services;
 
-import com.example.datavisualizationbackend.conifg.RabbitMQConfiguration;
-import com.example.datavisualizationbackend.models.Event;
-import com.example.datavisualizationbackend.models.EventHack;
+import com.example.datavisualizationbackend.Application;
+import com.example.datavisualizationbackend.shared.conifg.RabbitMQConfiguration;
+import com.example.datavisualizationbackend.shared.models.Event;
+import com.example.datavisualizationbackend.shared.models.EventHack;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.amqp.core.Queue;
@@ -12,15 +15,19 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.stereotype.Service;
 import org.springframework.util.ErrorHandler;
 
 import java.util.Date;
 
-
+@Service
 public class MessageReader {
 
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+
+    //TODO Re-implment MessageReader Class
     static public void ReadMessages() {
-        System.out.println("READING MESSAGES");
+        logger.debug("--APPLICATION STARTED--");
         final ApplicationContext rabbitConfig = new AnnotationConfigApplicationContext(RabbitMQConfiguration.class);
         final ConnectionFactory rabbitConnectionFactory = rabbitConfig.getBean(ConnectionFactory.class);
         final Queue rabbitQueue = rabbitConfig.getBean(Queue.class);

@@ -1,6 +1,6 @@
 package com.example.datavisualizationbackend;
 
-import com.example.datavisualizationbackend.controllers.UploadEventController;
+import com.example.datavisualizationbackend.simulator.controllers.UploadEventController;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,6 +1,5 @@
-package com.example.datavisualizationbackend.models;
+package com.example.datavisualizationbackend.shared.models;
 
-import java.io.Serializable;
 import java.util.Date;
 
 public class Event {
