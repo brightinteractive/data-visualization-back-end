@@ -1,12 +1,16 @@
 package com.example.datavisualizationbackend.shared.conifg;
 
+import com.example.datavisualizationbackend.visualizer.services.MessageReceiver;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,7 +42,7 @@ public class RabbitMQConfiguration {
     @Bean
     public RabbitTemplate rabbitTemplate() throws URISyntaxException {
         RabbitTemplate template = new RabbitTemplate(connectionFactory());
-        template.setMessageConverter(new Jackson2JsonMessageConverter());
+        template.setMessageConverter(jsonMessageConverter());
         template.setRoutingKey(this.uploadEventQueueName);
         template.setQueue(this.uploadEventQueueName);
         return template;
@@ -49,12 +53,25 @@ public class RabbitMQConfiguration {
         return new Queue(this.uploadEventQueueName);
     }
 
-    private static String getEnvOrThrow(String name) {
-        final String env = getenv(name);
-        if (env == null) {
-            throw new IllegalStateException("Environment variable [" + name + "] is not set.");
-        }
-        return env;
+    @Bean
+    public MessageConverter jsonMessageConverter(){
+        return new Jackson2JsonMessageConverter();
+    }
+
+    @Bean
+    public SimpleMessageListenerContainer listenerContainer( ConnectionFactory connectionFactory,
+                                                             MessageListenerAdapter listenerAdapter ) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(this.uploadEventQueueName);
+        container.setMessageListener(listenerAdapter);
+        container.setMessageConverter(jsonMessageConverter());
+        return container;
+    }
+
+    @Bean
+    MessageListenerAdapter listenerAdapter(MessageReceiver receiver) {
+        return new MessageListenerAdapter(receiver, "receiveMessage");
     }
 
 }

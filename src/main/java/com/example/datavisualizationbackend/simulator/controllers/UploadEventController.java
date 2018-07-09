@@ -16,7 +16,7 @@ public class UploadEventController {
     @Autowired
     UploadEventService uploadEventService;
 
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+    private static final Logger logger = LoggerFactory.getLogger(UploadEventController.class);
 
     @PostMapping
     public void uploadEvent(@RequestBody Event event) {
