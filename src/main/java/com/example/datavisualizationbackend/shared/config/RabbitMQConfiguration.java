@@ -58,19 +58,19 @@ public class RabbitMQConfiguration {
         return new Jackson2JsonMessageConverter();
     }
 
-    @Bean
-    public SimpleMessageListenerContainer listenerContainer(ConnectionFactory connectionFactory,
-                                                            MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(this.uploadEventQueueName);
-        container.setMessageListener(listenerAdapter);
-        return container;
-    }
-
-    @Bean
-    MessageListenerAdapter listenerAdapter(MessageReceiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
-    }
+//    @Bean
+//    public SimpleMessageListenerContainer listenerContainer(ConnectionFactory connectionFactory,
+//                                                            MessageListenerAdapter listenerAdapter) {
+//        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+//        container.setConnectionFactory(connectionFactory);
+//        container.setQueueNames(this.uploadEventQueueName);
+//        container.setMessageListener(listenerAdapter);
+//        return container;
+//    }
+//
+//    @Bean
+//    MessageListenerAdapter listenerAdapter(MessageReceiver receiver) {
+//        return new MessageListenerAdapter(receiver, "receiveMessage");
+//    }
 
 }
