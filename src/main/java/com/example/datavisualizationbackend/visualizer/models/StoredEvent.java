@@ -1,11 +1,11 @@
 package com.example.datavisualizationbackend.visualizer.models;
 
-import org.springframework.data.annotation.Id;
+import io.searchbox.annotations.JestId;
 
 public class StoredEvent {
 
-    @Id
-    private Integer id;
+    @JestId
+    private String id;
 
     private String eventType;
     private String userId;

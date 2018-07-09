@@ -43,13 +43,6 @@
             <version>2.0.4.RELEASE</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.searchbox/jest -->
-        <dependency>
-            <groupId>io.searchbox</groupId>
-            <artifactId>jest</artifactId>
-            <version>0.1.6</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -70,6 +63,12 @@
             <artifactId>spring-rabbit</artifactId>
             <version>2.0.4.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.searchbox</groupId>
+            <artifactId>jest</artifactId>
+            <version>0.1.2</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -80,6 +79,14 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>sonatype</id>
+            <name>Sonatype Groups</name>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
+    </repositories>
 
 
 </project>

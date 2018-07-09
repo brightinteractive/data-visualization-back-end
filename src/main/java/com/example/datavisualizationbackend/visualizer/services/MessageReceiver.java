@@ -1,7 +1,6 @@
 package com.example.datavisualizationbackend.visualizer.services;
 
 import com.example.datavisualizationbackend.visualizer.models.StoredEvent;
-import com.example.datavisualizationbackend.visualizer.repository.CrudRepository;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
@@ -14,7 +13,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageReceiver {
 
-    @Autowired CrudRepository crudRepository;
+    @Autowired
+    EventStorageService eventStorageService;
 
     private static final Logger logger = LoggerFactory.getLogger(MessageReceiver.class);
 
@@ -22,7 +22,7 @@ public class MessageReceiver {
     public void receiveMessage(byte[] in) {
         Gson gson = new GsonBuilder().create();
         StoredEvent event = gson.fromJson(new String(in), StoredEvent.class);
-        crudRepository.storeEvent(event);
+        eventStorageService.storeEvent(event);
     }
 
 }
