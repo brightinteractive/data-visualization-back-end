@@ -14,7 +14,7 @@ public class MessageReceiver {
 
     @RabbitHandler
     public void receiveMessage(Event event) {
-        System.out.println("Received <" + event + ">");
+        logger.info("You logged this event: " + event);
     }
 //    public void handleMessage(Message message) {
 //        logger.info("--LISTENING FOR MESSAGES ON QUEUE--");
