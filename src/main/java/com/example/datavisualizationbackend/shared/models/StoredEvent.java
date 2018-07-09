@@ -1,6 +1,12 @@
 package com.example.datavisualizationbackend.shared.models;
 
-public class EventHack {
+import org.springframework.data.annotation.Id;
+
+public class StoredEvent {
+
+    @Id
+    private Integer id;
+
     private String eventType;
     private String userId;
     private String userName;
@@ -9,7 +15,7 @@ public class EventHack {
     private String assetTitle;
     private long date;
 
-    public EventHack(String eventType, String userId, String userName, String group, int assetId, String assetTitle, long date) {
+    public StoredEvent(String eventType, String userId, String userName, String group, int assetId, String assetTitle, long date) {
         this.eventType = eventType;
         this.userId = userId;
         this.userName = userName;
@@ -49,7 +55,7 @@ public class EventHack {
 
     @Override
     public String toString() {
-        return "EventHack{" +
+        return "StoredEvent{" +
                 "eventType='" + eventType + '\'' +
                 ", userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +

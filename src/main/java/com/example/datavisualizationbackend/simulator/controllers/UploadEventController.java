@@ -21,7 +21,7 @@ public class UploadEventController {
     @PostMapping
     public void uploadEvent(@RequestBody Event event) {
         uploadEventService.simulateUploadEvent(event);
-        logger.info("--EVENT UPLOADED--");
+
     }
 
 
