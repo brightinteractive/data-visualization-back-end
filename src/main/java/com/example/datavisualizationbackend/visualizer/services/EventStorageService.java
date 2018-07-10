@@ -30,7 +30,7 @@ public class EventStorageService {
     private static final Logger logger = LoggerFactory.getLogger(EventStorageService.class);
 
     public void indexSampleEvents() {
-        StoredEvent event1 = new StoredEvent("someType1", "test", "someUserName1", "someGroup1", 123, "someAssetTitle1", 1235345345);
+        StoredEvent event1 = new StoredEvent("someType1", "not", "someUserName1", "someGroup1", 123, "someAssetTitle1", 1235345345);
         StoredEvent event2 = new StoredEvent("test", "someId2", "someUserName2", "someGroup2", 234, "someAssetTitle2", 1235345346);
 
         try {
@@ -85,5 +85,8 @@ public class EventStorageService {
         indexSampleEvents();
         String query = "test";
         List<StoredEvent> events = searchEvents(query);
+        for(StoredEvent anEvent : events) {
+            System.out.println(anEvent.getAssetId());
+        }
     }
 }
