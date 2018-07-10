@@ -4,7 +4,6 @@ import com.example.datavisualizationbackend.visualizer.models.StoredEvent;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Bulk;
-import io.searchbox.core.DeleteByQuery;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.indices.CreateIndex;
@@ -45,9 +44,7 @@ public class EventStorageService {
                     .addAction(new Index.Builder(event).index(_indexName).type(_typeName).build())
                     .build();
 
-            result = jestClient.execute(bulk);
-
-            System.out.println(result.getJsonString());
+            jestClient.execute(bulk);
 
         } catch (IOException e) {
             logger.error("Indexing error", e);
