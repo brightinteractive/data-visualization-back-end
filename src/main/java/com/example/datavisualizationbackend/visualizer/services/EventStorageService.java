@@ -29,9 +29,7 @@ public class EventStorageService {
 
     private static final Logger logger = LoggerFactory.getLogger(EventStorageService.class);
 
-    public void indexSampleEvents() {
-        StoredEvent event1 = new StoredEvent("someType1", "not", "someUserName1", "someGroup1", 123, "someAssetTitle1", 1235345345);
-        StoredEvent event2 = new StoredEvent("test", "someId2", "someUserName2", "someGroup2", 234, "someAssetTitle2", 1235345346);
+    public void indexEvent(StoredEvent event) {
 
         try {
             IndicesExists indicesExists = new IndicesExists.Builder("events").build();
@@ -43,8 +41,7 @@ public class EventStorageService {
             }
 
             Bulk bulk = new Bulk.Builder()
-                    .addAction(new Index.Builder(event1).index("events").type("event").build())
-                    .addAction(new Index.Builder(event2).index("events").type("event").build())
+                    .addAction(new Index.Builder(event).index("events").type("event").build())
                     .build();
 
             result = jestClient.execute(bulk);
@@ -82,7 +79,7 @@ public class EventStorageService {
 
     public void storeEvent(StoredEvent event) {
         logger.info("--STORED EVENT :" + event + " --");
-        indexSampleEvents();
+        indexEvent(event);
         String query = "test";
         List<StoredEvent> events = searchEvents(query);
         for(StoredEvent anEvent : events) {
