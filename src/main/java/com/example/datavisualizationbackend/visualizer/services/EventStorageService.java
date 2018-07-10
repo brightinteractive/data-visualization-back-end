@@ -77,7 +77,7 @@ public class EventStorageService {
     public void storeEvent(StoredEvent event) {
         logger.info("--STORED EVENT :" + event + " --");
         indexEvent(event);
-        String query = "test";
+        String query = "AnotherTest";
         List<StoredEvent> events = searchEvents(query);
         for(StoredEvent anEvent : events) {
             System.out.println(anEvent.getAssetId());
