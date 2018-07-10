@@ -77,11 +77,12 @@ public class EventStorageService {
         return null;
     }
 
-    public List<StoredEvent> getEventsBetweenDateRange(Long startDate, Long endDate) {
+    public List<StoredEvent> getEventsBetweenDateRange(Date startDate, Date endDate) {
+
         try {
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
             searchSourceBuilder.size(10000);
-            searchSourceBuilder.query(QueryBuilders.rangeQuery("date").from(startDate).to(endDate));
+            searchSourceBuilder.query(QueryBuilders.rangeQuery("date").from(startDate.getTime()).to(endDate.getTime()));
             Search search = new Search.Builder(searchSourceBuilder.toString())
                     .addIndex(_indexName)
                     .addType(_typeName)

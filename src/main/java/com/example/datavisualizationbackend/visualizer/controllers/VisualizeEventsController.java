@@ -23,10 +23,10 @@ public class VisualizeEventsController {
     private static final Logger logger = LoggerFactory.getLogger(VisualizeEventsController.class);
 
     @GetMapping
-    public List<StoredEvent> getEvents(@RequestBody Date date) {
+    public List<StoredEvent> getEvents() {
 
-        Long date1 = 1530503580000L;
-        Long date2 = 1530699560000L;
+        Date date1 = new Date(140000000);
+        Date date2 = new Date(20000000000000L);
         List<StoredEvent> events = eventStorageService.getEventsBetweenDateRange(date1, date2);
         return events;
     }
