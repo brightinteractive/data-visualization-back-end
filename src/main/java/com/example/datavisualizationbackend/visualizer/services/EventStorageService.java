@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -66,6 +67,27 @@ public class EventStorageService {
 
             JestResult result = jestClient.execute(search);
 
+            return result.getSourceAsObjectList(StoredEvent.class);
+
+        } catch (IOException e) {
+            logger.error("Search error", e);
+        } catch (Exception e) {
+            logger.error("Search error", e);
+        }
+        return null;
+    }
+
+    public List<StoredEvent> getEventsBetweenDateRange(Long startDate, Long endDate) {
+        try {
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+            searchSourceBuilder.size(10000);
+            searchSourceBuilder.query(QueryBuilders.rangeQuery("date").from(startDate).to(endDate));
+            Search search = new Search.Builder(searchSourceBuilder.toString())
+                    .addIndex(_indexName)
+                    .addType(_typeName)
+                    .build();
+
+            JestResult result = jestClient.execute(search);
             return result.getSourceAsObjectList(StoredEvent.class);
 
         } catch (IOException e) {
