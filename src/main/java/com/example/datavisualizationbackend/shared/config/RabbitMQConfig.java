@@ -1,6 +1,6 @@
 package com.example.datavisualizationbackend.shared.config;
 
-import com.example.datavisualizationbackend.visualizer.services.MessageReceiver;
+//import com.example.datavisualizationbackend.visualizer.services.MessageReceiver;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -26,7 +26,7 @@ public class RabbitMQConfig {
 
     protected final String uploadEventQueueName = "upload.event.queue";
 
-    @Value("amqp://virijqsl:Q4naR8xj2Uy3ybk0kCfYFP3Y0sXBKESk@wolverine.rmq.cloudamqp.com/virijqsl")
+    @Value("${cloudamqp.url}")
     private String cloudAmqpUrl;
 
     @Bean
@@ -58,19 +58,19 @@ public class RabbitMQConfig {
         return new Jackson2JsonMessageConverter();
     }
 
-    @Bean
-    public SimpleMessageListenerContainer listenerContainer(ConnectionFactory connectionFactory,
-                                                            MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(this.uploadEventQueueName);
-        container.setMessageListener(listenerAdapter);
-        return container;
-    }
+//    @Bean
+//    public SimpleMessageListenerContainer listenerContainer(ConnectionFactory connectionFactory,
+//                                                            MessageListenerAdapter listenerAdapter) {
+//        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+//        container.setConnectionFactory(connectionFactory);
+//        container.setQueueNames(this.uploadEventQueueName);
+//        container.setMessageListener(listenerAdapter);
+//        return container;
+//    }
 
-    @Bean
-    MessageListenerAdapter listenerAdapter(MessageReceiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
-    }
+//    @Bean
+//    MessageListenerAdapter listenerAdapter(MessageReceiver receiver) {
+//        return new MessageListenerAdapter(receiver, "receiveMessage");
+//    }
 
 }
