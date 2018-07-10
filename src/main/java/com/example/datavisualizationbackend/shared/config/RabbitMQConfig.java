@@ -1,6 +1,6 @@
 package com.example.datavisualizationbackend.shared.config;
 
-//import com.example.datavisualizationbackend.visualizer.services.MessageReceiver;
+import com.example.datavisualizationbackend.visualizer.services.MessageReceiver;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -58,19 +58,19 @@ public class RabbitMQConfig {
         return new Jackson2JsonMessageConverter();
     }
 
-//    @Bean
-//    public SimpleMessageListenerContainer listenerContainer(ConnectionFactory connectionFactory,
-//                                                            MessageListenerAdapter listenerAdapter) {
-//        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-//        container.setConnectionFactory(connectionFactory);
-//        container.setQueueNames(this.uploadEventQueueName);
-//        container.setMessageListener(listenerAdapter);
-//        return container;
-//    }
+    @Bean
+    public SimpleMessageListenerContainer listenerContainer(ConnectionFactory connectionFactory,
+                                                            MessageListenerAdapter listenerAdapter) {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.setQueueNames(this.uploadEventQueueName);
+        container.setMessageListener(listenerAdapter);
+        return container;
+    }
 
-//    @Bean
-//    MessageListenerAdapter listenerAdapter(MessageReceiver receiver) {
-//        return new MessageListenerAdapter(receiver, "receiveMessage");
-//    }
+    @Bean
+    MessageListenerAdapter listenerAdapter(MessageReceiver receiver) {
+        return new MessageListenerAdapter(receiver, "receiveMessage");
+    }
 
 }

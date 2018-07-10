@@ -16,7 +16,7 @@ public class JestConfiguration {
     private String connectionUrl;
 
     @Bean
-    public JestClient jestClient() throws Exception{
+    public JestClient jestClient() throws Exception {
 
         JestClientFactory factory = new JestClientFactory();
         factory.setHttpClientConfig(new HttpClientConfig

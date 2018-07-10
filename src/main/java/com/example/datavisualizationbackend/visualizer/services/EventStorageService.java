@@ -4,6 +4,7 @@ import com.example.datavisualizationbackend.visualizer.models.StoredEvent;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
 import io.searchbox.core.Bulk;
+import io.searchbox.core.DeleteByQuery;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.indices.CreateIndex;
@@ -24,21 +25,24 @@ public class EventStorageService {
     @Autowired
     JestClient jestClient;
 
+    private String _indexName = "events";
+    private String _typeName = "event";
+
     private static final Logger logger = LoggerFactory.getLogger(EventStorageService.class);
 
     public void indexEvent(StoredEvent event) {
 
         try {
-            IndicesExists indicesExists = new IndicesExists.Builder("events").build();
+            IndicesExists indicesExists = new IndicesExists.Builder(_indexName).build();
             JestResult result = jestClient.execute(indicesExists);
 
             if (!result.isSucceeded()) {
-                CreateIndex createIndex = new CreateIndex.Builder("events").build();
+                CreateIndex createIndex = new CreateIndex.Builder(_indexName).build();
                 jestClient.execute(createIndex);
             }
 
             Bulk bulk = new Bulk.Builder()
-                    .addAction(new Index.Builder(event).index("events").type("event").build())
+                    .addAction(new Index.Builder(event).index(_indexName).type(_typeName).build())
                     .build();
 
             result = jestClient.execute(bulk);
@@ -52,17 +56,19 @@ public class EventStorageService {
         }
     }
 
-    public List<StoredEvent> searchEvents(String param) {
+    public List<StoredEvent> getAllUploadEvents() {
         try {
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-            searchSourceBuilder.query(QueryBuilders.queryStringQuery(param));
+            searchSourceBuilder.size(10000);
+            searchSourceBuilder.query(QueryBuilders.matchAllQuery());
 
             Search search = new Search.Builder(searchSourceBuilder.toString())
-                    .addIndex("events")
-                    .addType("event")
+                    .addIndex(_indexName)
+                    .addType(_typeName)
                     .build();
 
             JestResult result = jestClient.execute(search);
+
             return result.getSourceAsObjectList(StoredEvent.class);
 
         } catch (IOException e) {
@@ -77,10 +83,5 @@ public class EventStorageService {
     public void storeEvent(StoredEvent event) {
         logger.info("--STORED EVENT :" + event + " --");
         indexEvent(event);
-        String query = "AnotherTest";
-        List<StoredEvent> events = searchEvents(query);
-        for(StoredEvent anEvent : events) {
-            System.out.println(anEvent.getAssetId());
-        }
     }
 }
