@@ -6,19 +6,30 @@ import io.searchbox.client.config.HttpClientConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Map;
+
 @Configuration
 public class JestConfiguration {
 
-    String connectionUrl = System.getenv("SEARCHBOX_URL");
 
     @Bean
-    public JestClient jestClient(){
+    public JestClient jestClient() throws Exception{
+
+        String connectionUrl;
+
+        if (System.getenv("SEARCHBOX_URL") != null) {
+            connectionUrl = System.getenv("SEARCHBOX_URL");
+
+        }  else {
+            connectionUrl = "http://localhost:9200";
+        }
+
+
         JestClientFactory factory = new JestClientFactory();
         factory.setHttpClientConfig(new HttpClientConfig
                 .Builder(connectionUrl)
                 .multiThreaded(true)
                 .build());
-        JestClient client = factory.getObject();
-        return client;
+        return factory.getObject();
     }
 }

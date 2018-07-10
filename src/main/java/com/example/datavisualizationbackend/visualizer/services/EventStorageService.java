@@ -1,12 +1,16 @@
 package com.example.datavisualizationbackend.visualizer.services;
 
 import com.example.datavisualizationbackend.visualizer.models.StoredEvent;
-import com.example.datavisualizationbackend.visualizer.repository.EventRepository;
 import io.searchbox.client.JestClient;
+import io.searchbox.client.JestResult;
+import io.searchbox.core.Bulk;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.indices.CreateIndex;
+import io.searchbox.indices.IndicesExists;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -24,65 +29,61 @@ public class EventStorageService {
 
     private static final Logger logger = LoggerFactory.getLogger(EventStorageService.class);
 
-    private EventRepository repository;
-
-    public Page<StoredEvent> findEventByAssetId(String id, Pageable pageable) {
-        return repository.findByAssetIdUsingCusomQuery(id, pageable);
-    }
-
-    public void IndexEvent(){
-        CreateEventIndex();
-        StoredEvent event = CreateTestEvent();
-        IndexEvent(event);
-    }
-
-    public void CreateEventIndex() {
-        try {
-            jestClient.execute(new CreateIndex.Builder("events").build());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public StoredEvent CreateTestEvent() {
-        StoredEvent source = new StoredEvent("someType", "someId", "someUserName", "someGroup", 123, "someAssetTitle", 1235345345);
-        return source;
-    }
-    public void IndexEvent(StoredEvent source) {
-        Index index = new Index.Builder(source).index("events").type("event").build();
-    }
-
-
-    public void SearchRepository() {
-        String query = "{\n" +
-                "    \"query\": {\n" +
-                "        \"filtered\" : {\n" +
-                "            \"query\" : {\n" +
-                "                \"query_string\" : {\n" +
-                "                    \"query\" : \"Lord\"\n" +
-                "                }\n" +
-                "            }\n"+
-                "        }\n" +
-                "    }\n" +
-                "}";
-
-        Search search = (Search) new Search.Builder(query).addIndex("events").addType("article").build();
+    public void indexSampleEvents() {
+        StoredEvent event1 = new StoredEvent("someType1", "test", "someUserName1", "someGroup1", 123, "someAssetTitle1", 1235345345);
+        StoredEvent event2 = new StoredEvent("test", "someId2", "someUserName2", "someGroup2", 234, "someAssetTitle2", 1235345346);
 
         try {
-            SearchResult result = jestClient.execute(search);
-            System.out.println(result);
-            System.out.println("SUCCESSFUL SEARCH REQUEST");
+            IndicesExists indicesExists = new IndicesExists.Builder("events").build();
+            JestResult result = jestClient.execute(indicesExists);
+
+            if (!result.isSucceeded()) {
+                CreateIndex createIndex = new CreateIndex.Builder("events").build();
+                jestClient.execute(createIndex);
+            }
+
+            Bulk bulk = new Bulk.Builder()
+                    .addAction(new Index.Builder(event1).index("events").type("event").build())
+                    .addAction(new Index.Builder(event2).index("events").type("event").build())
+                    .build();
+
+            result = jestClient.execute(bulk);
+
+            System.out.println(result.getJsonString());
+
+        } catch (IOException e) {
+            logger.error("Indexing error", e);
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("FAILED SEARCH REQUEST");
+            logger.error("Indexing error", e);
         }
-
-
     }
 
+    public List<StoredEvent> searchEvents(String param) {
+        try {
+            SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+            searchSourceBuilder.query(QueryBuilders.queryStringQuery(param));
 
+            Search search = new Search.Builder(searchSourceBuilder.toString())
+                    .addIndex("events")
+                    .addType("event")
+                    .build();
+
+            JestResult result = jestClient.execute(search);
+            return result.getSourceAsObjectList(StoredEvent.class);
+
+        } catch (IOException e) {
+            logger.error("Search error", e);
+        } catch (Exception e) {
+            logger.error("Search error", e);
+        }
+        return null;
+    }
 
 
     public void storeEvent(StoredEvent event) {
         logger.info("--STORED EVENT :" + event + " --");
+        indexSampleEvents();
+        String query = "test";
+        List<StoredEvent> events = searchEvents(query);
     }
 }
