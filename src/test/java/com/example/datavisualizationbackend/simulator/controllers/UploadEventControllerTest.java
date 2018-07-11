@@ -16,7 +16,7 @@ public class UploadEventControllerTest {
     private MockMvc mockMvc;
 
     @InjectMocks
-    private UploadEventController uploadEventController;
+    private SimulateUploadEventController uploadEventController;
 
     @Before
     public void setUp() throws Exception {

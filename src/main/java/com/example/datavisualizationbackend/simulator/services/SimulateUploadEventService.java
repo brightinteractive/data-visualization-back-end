@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UploadEventService {
+public class SimulateUploadEventService {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    private static final Logger logger = LoggerFactory.getLogger(UploadEventService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimulateUploadEventService.class);
 
     public void simulateUploadEvent(Event event) {
         rabbitTemplate.convertAndSend(event);

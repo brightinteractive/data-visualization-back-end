@@ -1,7 +1,5 @@
 package com.example.datavisualizationbackend.visualizer.controllers;
 
-import com.example.datavisualizationbackend.simulator.models.Event;
-import com.example.datavisualizationbackend.simulator.services.UploadEventService;
 import com.example.datavisualizationbackend.visualizer.models.StoredEvent;
 import com.example.datavisualizationbackend.visualizer.services.EventStorageService;
 import org.slf4j.Logger;
