@@ -23,8 +23,8 @@ public class VisualizeEventsController {
 
     @GetMapping
     @ResponseBody
-    public List<Event> getEventsBetweenDateRange(@RequestParam("start-date") Date startDate, @RequestParam("end-date") Date endDate) {
-        List<Event> events = eventStorageService.getEventsBetweenDateRange(startDate, endDate);
+    public List<Event> getEventsBetweenDateRange(@RequestParam("start-date") Long startDate, @RequestParam("end-date") Long endDate) {
+        List<Event> events = eventStorageService.getEventsBetweenDateRange(new Date(startDate), new Date(endDate));
         return events;
     }
 
