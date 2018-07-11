@@ -31,7 +31,7 @@ public class EventStorageService {
 
     private static final Logger logger = LoggerFactory.getLogger(EventStorageService.class);
 
-    public void indexEvent(StoredEvent event) {
+    private void indexEvent(StoredEvent event) {
 
         try {
             IndicesExists indicesExists = new IndicesExists.Builder(_indexName).build();
