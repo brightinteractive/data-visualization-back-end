@@ -18,7 +18,7 @@ public class UploadEventController {
     private static final Logger logger = LoggerFactory.getLogger(UploadEventController.class);
 
     @PostMapping
-    public void uploadEvent(@RequestBody Event event) {
+    public void simulateUploadEvent(@RequestBody Event event) {
         uploadEventService.simulateUploadEvent(event);
 
     }

@@ -17,7 +17,7 @@ public class UploadEventService {
 
     public void simulateUploadEvent(Event event) {
         rabbitTemplate.convertAndSend(event);
-        logger.info("--EVENT UPLOADED--");
+        logger.info(String.format("Sent upload event mesaage %s", event));
     }
 
 }

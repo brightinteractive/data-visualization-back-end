@@ -1,23 +1,17 @@
-package com.example.datavisualizationbackend;
+package com.example.datavisualizationbackend.simulator.controllers;
 
-import com.example.datavisualizationbackend.simulator.controllers.UploadEventController;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+public class UploadEventControllerTest {
 
-@RunWith(SpringJUnit4ClassRunner.class)
-public class ApplicationTests {
-
-    //Test all servlet related calls. Can test endpoints by calling them directly using MockMvc.
     private MockMvc mockMvc;
 
     @InjectMocks
@@ -29,9 +23,10 @@ public class ApplicationTests {
     }
 
     @Test
-    public void testUploadEventController() throws Exception {
+    public void getUploadEventsReturnsOKStatus() throws Exception {
         mockMvc.perform(get("/")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+
 }
