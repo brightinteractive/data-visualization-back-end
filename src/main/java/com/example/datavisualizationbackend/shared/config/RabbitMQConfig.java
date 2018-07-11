@@ -24,7 +24,7 @@ import static java.lang.System.getenv;
 @Configuration
 public class RabbitMQConfig {
 
-    protected final String uploadEventQueueName = "upload.event.queue";
+    protected final String eventQueueName = "event.queue";
 
     @Value("${cloudamqp.url}")
     private String cloudAmqpUrl;
@@ -43,14 +43,14 @@ public class RabbitMQConfig {
     public RabbitTemplate rabbitTemplate() throws URISyntaxException {
         RabbitTemplate template = new RabbitTemplate(connectionFactory());
         template.setMessageConverter(jsonMessageConverter());
-        template.setRoutingKey(this.uploadEventQueueName);
-        template.setQueue(this.uploadEventQueueName);
+        template.setRoutingKey(this.eventQueueName);
+        template.setQueue(this.eventQueueName);
         return template;
     }
 
     @Bean
     public Queue queue() {
-        return new Queue(this.uploadEventQueueName);
+        return new Queue(this.eventQueueName);
     }
 
     @Bean
@@ -63,14 +63,14 @@ public class RabbitMQConfig {
                                                             MessageListenerAdapter listenerAdapter) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(this.uploadEventQueueName);
+        container.setQueueNames(this.eventQueueName);
         container.setMessageListener(listenerAdapter);
         return container;
     }
 
     @Bean
     MessageListenerAdapter listenerAdapter(MessageReceiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
+        return new MessageListenerAdapter(receiver, "receiveEventMessage");
     }
 
 }

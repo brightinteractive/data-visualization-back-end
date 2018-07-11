@@ -1,6 +1,9 @@
 package com.example.datavisualizationbackend.visualizer.models;
 
+import com.example.datavisualizationbackend.shared.models.Event;
 import io.searchbox.annotations.JestId;
+
+import java.util.Date;
 
 public class StoredEvent {
 
@@ -67,4 +70,7 @@ public class StoredEvent {
     }
 
 
+    public Event toEvent() {
+        return new Event(this.eventType,this.userId,this.userName,this.group,this.assetId,this.assetTitle,new Date(this.date));
+    }
 }

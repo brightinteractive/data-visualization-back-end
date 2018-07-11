@@ -1,5 +1,6 @@
 package com.example.datavisualizationbackend.visualizer.controllers;
 
+import com.example.datavisualizationbackend.shared.models.Event;
 import com.example.datavisualizationbackend.visualizer.models.StoredEvent;
 import com.example.datavisualizationbackend.visualizer.services.EventStorageService;
 import org.slf4j.Logger;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/getEvents")
+@RequestMapping("/events")
 public class VisualizeEventsController {
 
     @Autowired
@@ -20,8 +21,8 @@ public class VisualizeEventsController {
     private static final Logger logger = LoggerFactory.getLogger(VisualizeEventsController.class);
 
     @GetMapping
-    public List<StoredEvent> getEvents() {
-        List<StoredEvent> events = eventStorageService.getAllUploadEvents();
+    public List<Event> getEvents() {
+        List<Event> events = eventStorageService.getAllEvents();
         return events;
     }
 

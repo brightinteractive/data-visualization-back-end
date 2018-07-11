@@ -38,9 +38,9 @@ public class VisualizeEventsControllerTest {
     @Test
     public void getUploadEventsReturnsEmptyListWhenNoEvents() throws Exception {
 
-        when(eventStorageService.getAllUploadEvents()).thenReturn(emptyList());
+        when(eventStorageService.getAllEvents()).thenReturn(emptyList());
 
-        mockMvc.perform(get("/getEvents")
+        mockMvc.perform(get("/events")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[]"));

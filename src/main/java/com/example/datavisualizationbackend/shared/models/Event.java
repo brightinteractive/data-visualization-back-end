@@ -1,4 +1,4 @@
-package com.example.datavisualizationbackend.simulator.models;
+package com.example.datavisualizationbackend.shared.models;
 
 import java.util.Date;
 

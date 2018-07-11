@@ -1,5 +1,6 @@
 package com.example.datavisualizationbackend.visualizer.services;
 
+import com.example.datavisualizationbackend.shared.models.Event;
 import com.example.datavisualizationbackend.visualizer.models.StoredEvent;
 import io.searchbox.client.JestClient;
 import io.searchbox.client.JestResult;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventStorageService {
@@ -53,7 +55,7 @@ public class EventStorageService {
         }
     }
 
-    public List<StoredEvent> getAllUploadEvents() {
+    public List<Event> getAllEvents() {
         try {
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
             searchSourceBuilder.size(10000);
@@ -66,7 +68,7 @@ public class EventStorageService {
 
             JestResult result = jestClient.execute(search);
 
-            return result.getSourceAsObjectList(StoredEvent.class);
+            return result.getSourceAsObjectList(StoredEvent.class).stream().map(storedEvent -> storedEvent.toEvent()).collect(Collectors.toList());
 
         } catch (IOException e) {
             logger.error("Search error", e);
