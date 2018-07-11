@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -21,8 +22,9 @@ public class VisualizeEventsController {
     private static final Logger logger = LoggerFactory.getLogger(VisualizeEventsController.class);
 
     @GetMapping
-    public List<Event> getEvents() {
-        List<Event> events = eventStorageService.getAllEvents();
+    @ResponseBody
+    public List<Event> getEventsBetweenDateRange(@RequestParam("start-date") Date startDate, @RequestParam("end-date") Date endDate) {
+        List<Event> events = eventStorageService.getEventsBetweenDateRange(startDate, endDate);
         return events;
     }
 

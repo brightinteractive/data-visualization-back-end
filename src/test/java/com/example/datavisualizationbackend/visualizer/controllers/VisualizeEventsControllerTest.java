@@ -12,6 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Date;
+
 import static java.util.Collections.emptyList;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -38,7 +40,7 @@ public class VisualizeEventsControllerTest {
     @Test
     public void getUploadEventsReturnsEmptyListWhenNoEvents() throws Exception {
 
-        when(eventStorageService.getAllEvents()).thenReturn(emptyList());
+        when(eventStorageService.getEventsBetweenDateRange(new Date(), new Date())).thenReturn(emptyList());
 
         mockMvc.perform(get("/events")
                 .accept(MediaType.APPLICATION_JSON))
