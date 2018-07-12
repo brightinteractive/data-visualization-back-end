@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -55,12 +56,11 @@ public class EventStorageService {
         }
     }
 
-    public List<Event> getAllEvents() {
+    public List<Event> getEventsBetweenDateRange(Date startDate, Date endDate) {
         try {
             SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
             searchSourceBuilder.size(10000);
-            searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-
+            searchSourceBuilder.query(QueryBuilders.rangeQuery("date").from(startDate.getTime()).to(endDate.getTime()));
             Search search = new Search.Builder(searchSourceBuilder.toString())
                     .addIndex(_indexName)
                     .addType(_typeName)
