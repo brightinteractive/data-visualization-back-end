@@ -18,8 +18,6 @@ import org.springframework.context.annotation.Configuration;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import static java.lang.System.getenv;
-
 
 @Configuration
 public class RabbitMQConfig {
